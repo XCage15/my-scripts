@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+#Learning expect: Lesson  2
+# Written by Tayzar Lwin <tayzar.lwin@frontiir.net>
+#Usage : ./script.exp user "password" "Root:password"
+set timeout 0
+set user [ lindex $argv 0 ]
+set pwd [ lindex $argv 1 ]
+#change to root privileges first
+spawn su 
+expect "Password:"
+send  "Fr0nt!!r\r"
+#Change passwd for user
+spawn passwd $user
+#expect (current) UNIX password:
+expect "Enter new UNIX password:"
+send "$pwd\r"
+expect Retype new UNIX password:
+send "$pwd\r"
+send "exit\r"
+interact

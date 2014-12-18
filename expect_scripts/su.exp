@@ -1,0 +1,13 @@
+#!/usr/bin/expect
+#Learning expect: Lesson 3
+# Written by Tayzar Lwin <tayzar.lwin@frontiir.net>
+set timeout 10
+set password [lindex $argv 0]
+spawn su 
+expect "Password:"
+send  "$password\r"
+#interact 
+
+
+
+

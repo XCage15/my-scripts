@@ -1,0 +1,13 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+spawn "./hello.pl"
+
+expect "hello"
+send "no match : <$expect_out(buffer)>\n"
+send "match :  <$expect_out(0,string)>\n"
+
+interact
+
+

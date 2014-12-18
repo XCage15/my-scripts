@@ -1,0 +1,38 @@
+#!/usr/bin/expect
+#Learning expect: Lesson 3
+# Written by Tayzar Lwin <tayzar.lwin@frontiir.net>
+# [USAGE:] sudo ./remoteSU.exp user password host root_password
+set timeout 10
+set user [lindex $argv 0]
+set password [lindex $argv 1]
+set host [lindex $argv 2]
+set rpwd [lindex $argv 3]
+set uPrompt "$"
+set rPrompt "#"
+spawn ssh -l $user $host
+while (1) {
+        expect {
+"(yes/no)?" {
+        send "yes\r" }
+"password:" {
+send  "$password\r"
+break }
+}
+}
+expect "$uPrompt"
+send "su\r"
+expect "Password:"
+send "$rpwd\r"
+expect "$rPrompt"
+send "cd /tmp\r"
+expect "$rPrompt"
+send "wget http://10.10.101.27/dailyReport.sh\r"
+expect "$rPrompt"
+send "chmod +x /tmp/dailyReport.sh\r"
+expect "$rPrompt"
+send "/bin/bash /tmp/dailyReport.sh\r"
+expect "$rPrompt"
+send "exit\r"
+expect "$uPrompt"
+send "exit\r"
+interact

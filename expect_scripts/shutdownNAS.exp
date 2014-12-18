@@ -1,0 +1,15 @@
+#! /usr/bin/expect
+;# [USAGE] ./script.exp [user] ['password'] [host]
+set timeout 10
+;# -- command line arguments to our scripts
+set user [lindex $argv 0]
+set password [lindex $argv 1]
+set host [lindex $argv 2]
+;# script start running 
+spawn /usr/bin/ssh -l $user@$host
+expect "Password:"
+send  "$password\r"
+send "uptime\r"
+send "show network interface\r"
+send "exit\r"
+interact 

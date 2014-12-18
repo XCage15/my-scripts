@@ -1,0 +1,24 @@
+#!/usr/bin/expect
+#Learning expect: Lesson 4
+# Written by Tayzar Lwin <tayzar.lwin@frontiir.net>
+set timeout 10
+set user [lindex $argv 0]
+set password [lindex $argv 1]
+set host [lindex $argv 2]
+set uPrompt "$ "
+set rPrompt "# "
+spawn ssh -l $user $host 
+expect "no)? " 
+send  "yes\r"
+expect "Password:"
+send  "$password\r"
+expect "$uPrompt"
+send "su\r"
+expect "Password: " 
+send -- "$password\r"
+expect "rPrompt"
+send "shutdown -h now\r"
+send "exit\r"
+expect "$uPrompt"
+send "exit\r"
+interact 
